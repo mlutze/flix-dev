@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# pulls the latest nightly Flix version to the local directory
+
+set -e
+
+today=$(date -d today +%Y-%m-%d)
+yesterday=$(date -d yesterday +%Y-%m-%d)
+
+today_url="https://flix.dev/nightly/flix-${today}.jar"
+yesterday_url="https://flix.dev/nightly/flix-${yesterday}.jar"
+
+curl -L -f "${today_url}" > ./flix.jar ||
+    curl -L -f "${yesterday_url}" > ./flix.jar
