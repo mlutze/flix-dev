@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+# Identifies all the keywords in the Parser.scala file
+# and prints them as a Set, paste-able into Weeder.scala.
+
+import re
+import fileinput
+
+keywords = set()
+
+for line in fileinput.input():
+    keywords.update(re.findall(r'(?:keyword|operator|operatorX)\(\"(\S+)\"\)', line))
+
+kw_list = list(keywords)
+kw_list.sort()
+
+def quote(word):
+    return "\"" + word + "\""
+
+print("Set(" + ", ".join(quote(kw) for kw in kw_list) + ")")
+
