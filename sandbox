@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Must only be run from flix project root.
+
+# Builds the project and copies the JAR into a personal sandbox directory.
+# Expects the following directory under flix root:
+# $ROOT$/personal/flix-sandbox
+
+set -e
+
+# all paths are relative to project root
+
+./gradlew clean jar
+cp ./build/libs/flix.jar ./personal/flix-sandbox/
+code -w ./personal/flix-sandbox/
