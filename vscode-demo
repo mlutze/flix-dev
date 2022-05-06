@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -e
+
+WIDTH=936
+HEIGHT=564
+PROJ_DIR=my-flix-project
+DATA_DIR=user-data
+
+# make the directories
+mkdir $PROJ_DIR
+mkdir $DATA_DIR
+
+# uninstall flix
+code --uninstall-extension flix.flix || true
+
+# run with the custom data dir and wait for it to open
+code --user-data-dir $DATA_DIR $PROJ_DIR
+sleep 3s
+
+# resize the window
+codewin=$(xdotool search --onlyvisible --name "Visual Studio")
+xdotool windowsize $codewin $WIDTH $HEIGHT
+
+# launch the screen recorder
+peek
+
+# close the vscode window and wait for it
+xdotool windowclose $codewin
+sleep 3s
+
+# remove the demo files
+rm -rf $PROJ_DIR
+rm -rf $DATA_DIR
