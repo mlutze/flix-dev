@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Builds a jar on current branch and on the given branch (default master),
+# and places them in the ./personal/benchmarks/ directory.
+
+# This is intended for comparing benchmarks,
+# but for some reason running the benchmarks in a script
+# causes instability of running times on my machine.
+
+other=${1:-master}
+
+set -e
+
+# build on this branch
+./gradlew clean jar
+mv ./build/libs/flix.jar ./personal/benchmarks/feature-flix.jar
+
+# check out other branch and wait for gradle to catch up
+git checkout "${other}"
+sleep 3s
+
+# build on the other branch
+./gradlew clean jar
+mv ./build/libs/flix.jar "./personal/benchmarks/${other}-flix.jar"
+
+# reset to feature branch
+git checkout -
+
