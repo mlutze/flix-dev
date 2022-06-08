@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Counts the appearances of internal variable names in the generated API documentation.
+# `flix --doc` should be run before running this command.
+
+cat ./build/api/api.json | jq '.defs[][].fparams[].tpe, .defs[][].eff, .defs[][].tpe | scan("[a-z]+[0-9][0-9][0-9][0-9]")' | wc --lines
